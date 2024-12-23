@@ -24,6 +24,7 @@ local Api = {
     },
     run = {},
     open = {},
+    close = {},
   },
   events = {},
   marks = {
@@ -229,6 +230,13 @@ local function edit(mode, node)
   local path = file_link and file_link.link_to or node.absolute_path
   actions.node.open_file.fn(mode, path)
 end
+--
+---@param node Node
+local function close(node)
+  local file_link = node:as(FileLinkNode)
+  local path = file_link and file_link.link_to or node.absolute_path
+  actions.node.close_file.fn(path)
+end
 
 ---@param mode string
 ---@param toggle_group boolean?
@@ -248,6 +256,8 @@ local function open_or_expand_or_dir_up(mode, toggle_group)
     end
   end
 end
+
+Api.node.close.close = wrap_node(close)
 
 Api.node.open.edit = wrap_node(open_or_expand_or_dir_up("edit"))
 Api.node.open.drop = wrap_node(open_or_expand_or_dir_up("drop"))
