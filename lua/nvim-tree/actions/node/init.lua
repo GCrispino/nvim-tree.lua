@@ -10,7 +10,7 @@ function M.setup(opts)
   require("nvim-tree.actions.node.system-open").setup(opts)
   require("nvim-tree.actions.node.file-popup").setup(opts)
   require("nvim-tree.actions.node.open-file").setup(opts)
-  require("nvim-tree.actions.node.close-file").setup(opts)
+  require("nvim-tree.actions.node.close-file-buffer").setup(opts)
 end
 
 return M
