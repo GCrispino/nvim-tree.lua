@@ -205,7 +205,6 @@ Api.tree.is_visible = wrap(view.is_visible)
 
 Api.tree.winid = wrap(view.winid)
 
-
 Api.tree.close_file_buffer = wrap(actions.tree.close_file_buffer.fn)
 
 Api.fs.create = wrap_node_or_nil(actions.fs.create_file.fn)
@@ -233,12 +232,12 @@ local function edit(mode, node)
   local path = file_link and file_link.link_to or node.absolute_path
   actions.node.open_file.fn(mode, path)
 end
---
+
 ---@param node Node
-local function close(node)
+local function close_file_buffer(node)
   local file_link = node:as(FileLinkNode)
   local path = file_link and file_link.link_to or node.absolute_path
-  actions.node.close_file.fn(path)
+  actions.node.close_file_buffer.fn(path)
 end
 
 ---@param mode string
@@ -260,7 +259,7 @@ local function open_or_expand_or_dir_up(mode, toggle_group)
   end
 end
 
-Api.node.close.close = wrap_node(close)
+Api.node.close.close_file_buffer = wrap_node(close_file_buffer)
 
 Api.node.open.edit = wrap_node(open_or_expand_or_dir_up("edit"))
 Api.node.open.drop = wrap_node(open_or_expand_or_dir_up("drop"))

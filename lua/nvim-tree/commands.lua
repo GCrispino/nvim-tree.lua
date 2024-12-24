@@ -104,25 +104,6 @@ local CMDS = {
     end,
   },
   {
-    name = "NvimTreeCloseFileBuffer",
-    opts = {
-      desc = "nvim-tree: close file buffer",
-      -- bang = true,
-      -- bar = true,
-      nargs = 1,
-      bar = true,
-    },
-    command = function(c)
-      -- vim.print(api.node)
-      api.node.close.close(c.args)
-      -- api.tree.find_file({
-      --   open = true,
-      --   focus = true,
-      --   update_root = c.bang,
-      -- })
-    end,
-  },
-  {
     name = "NvimTreeResize",
     opts = {
       desc = "nvim-tree: resize",
