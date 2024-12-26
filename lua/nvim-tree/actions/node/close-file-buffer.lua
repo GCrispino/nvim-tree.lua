@@ -1,6 +1,5 @@
 local M = {}
----
----@param mode string
+
 ---@param filename string
 ---@return nil
 function M.fn(filename)
