@@ -273,10 +273,41 @@ local function open_or_expand_or_dir_up(mode, toggle_group)
   end
 end
 
+local function unsupported_opts_message(opts, action_name)
+  if opts.quit_on_open or opts.focus then
+    notify.error(string.format("`quit_on_open` and `focus` options are not supported for `Api.node.open.%s` action", action_name))
+
+    return true
+  end
+
+  return false
+end
+
 Api.node.open.edit = wrap_node(open_or_expand_or_dir_up("edit"))
-Api.node.open.drop = wrap_node(open_or_expand_or_dir_up("drop"))
-Api.node.open.tab_drop = wrap_node(open_or_expand_or_dir_up("tab_drop"))
-Api.node.open.replace_tree_buffer = wrap_node(open_or_expand_or_dir_up("edit_in_place"))
+Api.node.open.drop = function(node, opts)
+  if unsupported_opts_message(opts, "drop") then
+    return
+  end
+
+  return wrap_node(open_or_expand_or_dir_up("drop"))(node)
+end
+
+Api.node.open.tab_drop = function(node, opts)
+  if unsupported_opts_message(opts, "tab_drop") then
+    return
+  end
+
+  return wrap_node(open_or_expand_or_dir_up("tab_drop"))(node)
+end
+
+Api.node.open.replace_tree_buffer = function(node, opts)
+  if unsupported_opts_message(opts, "replace_tree_buffer") then
+    return
+  end
+
+  return wrap_node(open_or_expand_or_dir_up("edit_in_place"))(node)
+end
+
 Api.node.open.no_window_picker = wrap_node(open_or_expand_or_dir_up("edit_no_picker"))
 Api.node.open.vertical = wrap_node(open_or_expand_or_dir_up("vsplit"))
 Api.node.open.vertical_no_picker = wrap_node(open_or_expand_or_dir_up("vsplit_no_picker"))
